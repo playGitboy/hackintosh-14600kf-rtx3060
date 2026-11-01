@@ -49,7 +49,7 @@
 必需 boot-args：
 
 ```
-nvfb=1 nvaccel=1 nvfbheads=4 -nvkmsnosmooth gfxrst=4 nvfbhidpi=1
+nvfb=1 nvaccel=1 nvfbheads=1 gfxrst=4 nvfbhidpi=1
 ```
 
 ---

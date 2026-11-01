@@ -183,10 +183,12 @@ AudioDevice  = PciRoot(0x0)/Pci(0x1b,0x0)
 ### boot-args
 
 ```
-debug=0x100 keepsyms=1 ctrsmt=full nvfb=1 nvaccel=1 nvfbheads=4 -nvkmsnosmooth
+debug=0x100 keepsyms=1 ctrsmt=full nvfb=1 nvaccel=1 nvfbheads=1
 amfi_get_out_of_my_way=0x1 amfi=0x80 ipc_control_port_options=0
 gfxrst=4 nvfbhidpi=1 -btlfxboardid -btlfxallowanyaddr -alcdbg
 ```
+
+> 2026-11-01 已按上游 #283 把 `nvfbheads` 改为 1 并移除 `-nvkmsnosmooth`，原因见 [上游 issue 提炼](12-upstream-issues.md)。
 
 逐项解释见 [显卡 NullMoth](03-gpu-nullmoth.md#4-boot-args-逐项)。
 

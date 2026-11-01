@@ -74,7 +74,7 @@ Fast Boot                Disabled
 本机实测可用串（完整解释见 [OpenCore 配置](docs/09-opencore-config.md)）：
 
 ```
-debug=0x100 keepsyms=1 ctrsmt=full nvfb=1 nvaccel=1 nvfbheads=4 -nvkmsnosmooth
+debug=0x100 keepsyms=1 ctrsmt=full nvfb=1 nvaccel=1 nvfbheads=1
 amfi_get_out_of_my_way=0x1 amfi=0x80 ipc_control_port_options=0
 gfxrst=4 nvfbhidpi=1 -btlfxboardid -btlfxallowanyaddr -alcdbg
 ```
@@ -100,6 +100,7 @@ gfxrst=4 nvfbhidpi=1 -btlfxboardid -btlfxallowanyaddr -alcdbg
 | [09 OpenCore 配置](docs/09-opencore-config.md) | 本机 config.plist 实测值逐项解释 |
 | [10 故障速查](docs/10-troubleshooting.md) | 按症状查：黑屏、无声、卡代码、菜单消失 |
 | [11 驱动下载清单](docs/11-driver-links.md) | 全部 kext / 工具 / 镜像链接与版本 |
+| [12 上游 issue 提炼](docs/12-upstream-issues.md) | 从 1401 / 驱动仓库 issue 学到的修复与验证方法 |
 | [scripts/status.sh](scripts/status.sh) | 只读体检脚本，一次打印全部关键状态 |
 
 ---

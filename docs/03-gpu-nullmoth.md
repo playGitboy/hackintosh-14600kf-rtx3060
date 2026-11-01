@@ -111,17 +111,19 @@ sudo shutdown -r now
 本机实测串：
 
 ```
-debug=0x100 keepsyms=1 ctrsmt=full nvfb=1 nvaccel=1 nvfbheads=4 -nvkmsnosmooth
+debug=0x100 keepsyms=1 ctrsmt=full nvfb=1 nvaccel=1 nvfbheads=1
 amfi_get_out_of_my_way=0x1 amfi=0x80 ipc_control_port_options=0
 gfxrst=4 nvfbhidpi=1 -btlfxboardid -btlfxallowanyaddr -alcdbg
 ```
+
+> 2026-11-01 依据上游 [nvidia-macos-driver#283](https://github.com/nullmoth/nvidia-macos-driver/issues/283) 调整：`nvfbheads` 4 → 1，并移除 `-nvkmsnosmooth`。上游结论是这两个参数会造成动画/窗口切换卡顿。改前配置备份在 EFI 分区 `config.plist.bak-20261101-095941`。
 
 | 参数 | 作用 | 备注 |
 |---|---|---|
 | `nvfb=1` | 启用 NVRMFB 帧缓冲 | 必需 |
 | `nvaccel=1` | 启用 NVAccel（WindowServer 合成） | 必需 |
-| `nvfbheads=4` | 显示头数量 | 本机单屏也用 4；出问题可试 `1` |
-| `-nvkmsnosmooth` | 关闭 KMS 平滑过渡 | 减少黑屏闪烁 |
+| `nvfbheads=1` | 显示头数量 | 单屏用 1；多屏再调大。上游 #283 指出 `4` 会造成动画卡顿 |
+| ~~`-nvkmsnosmooth`~~ | 原为关闭 KMS 平滑 | **已移除**（上游 #283：它是动画卡顿来源之一） |
 | `gfxrst=4` | 显卡复位策略 | 2.6.x 参数 |
 | **`nvfbhidpi=1`** | **允许 NVRMFB 输出 HiDPI 模式** | HiDPI 的前提，详见 [HiDPI](04-hidpi.md) |
 | `amfi_get_out_of_my_way=0x1` + `amfi=0x80` | 放开 AMFI，允许未签名 bundle / WindowServer 加载第三方 GPU bundle | 必需 |

@@ -81,6 +81,17 @@ system_profiler SPBluetoothDataType | head -25
 
 `bluetoothd` 会周期性搜索一个内置控制器（`bm3_usb`），日志里刷错误。不影响使用，不用管。
 
+### 部分 BLE 设备漏扫
+
+遥控器、部分手柄这类 BLE HID 可能扫不到。上游两个仓库都没有针对这颗 Realtek 蓝牙的配对修复。可尝试的顺序（完整版见 [上游 issue 提炼](12-upstream-issues.md#蓝牙漏扫小米遥控器-pro-等-ble-设备)）：
+
+1. 确认 Wi-Fi 已关（共存优先排除）
+2. `sudo pkill bluetoothd`
+3. 设备进入配对模式后，系统设置 → 蓝牙保持窗口 30 秒以上
+4. 仍不行：完全关机断电 30 秒（复位固件），不是重启
+
+`-btlfxallowanyaddr` 必须保留，BLE HID 对地址校验敏感。
+
 ---
 
 ## 4. Wi-Fi 与蓝牙抢天线（本机最重要的坑）
