@@ -46,6 +46,8 @@ sudo ./scripts/uninstall-nvrmfb-latch.sh
 
 **风险**：厂商默认用 `1` 是为了压某些机器上的闪烁。若出现闪烁/撕裂，卸载脚本即可回退。
 
+**重启验证（2026-11-01）**：LaunchDaemon 在开机 12 秒后把值从 1 设为 2，`late=0`、`timeouts=0`，submit 仍为 0 ms。
+
 ---
 
 ### 2. `nvfbheads=1` + 去掉 `-nvkmsnosmooth`
@@ -66,6 +68,8 @@ sudo ./scripts/uninstall-nvrmfb-latch.sh
 ```
 
 单屏机器用 `1` 没有副作用；多屏再考虑 2/4。
+
+> **重启验证（2026-11-01）**：第一次改完没生效——本机 `NVRAM → Delete` 里缺 `boot-args`，OpenCore 的 `Add` 被忽略，`nvram boot-args` 仍是旧串。补上 Delete 项后重启，确认 `nvfbheads=1` 且 `-nvkmsnosmooth` 已移除。细节见 [OpenCore 配置](09-opencore-config.md#6-nvram)。
 
 > 这条与 flip_latch 是**两个独立变量**。如果改完出现问题，先回退 boot-args（`config.plist.bak-20261101-095941`），再单独测 flip_latch。
 
