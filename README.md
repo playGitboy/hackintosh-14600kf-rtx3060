@@ -119,6 +119,7 @@ gfxrst=4 nvfbhidpi=1 -btlfxboardid -btlfxallowanyaddr -alcdbg
 - **NVIDIA 驱动是第三方、非开源、非商用许可**（PolyForm Noncommercial），且厂商对 Ampere 只标 `Pending`——本机实测可用，但换卡必须自己验证。
 - **睡眠未验证**：本机直接 `sleep 0` 关掉了。想让机器睡眠的人要自己测，并准备回滚。
 - **蓝牙漏扫**：比如无法识别小米蓝牙遥控器pro
+- **程序兼容性**：豆包语音输入法卡死；trae新版本不支持intel mac
 - **Chrome 的 WebGL / DRM 视频**：不同版本驱动表现不一致，Safari 更稳。本机未系统测试。
 
 ---
