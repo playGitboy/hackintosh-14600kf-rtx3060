@@ -180,6 +180,8 @@ AudioDevice  = PciRoot(0x0)/Pci(0x1b,0x0)
 
 **`Delete` 里必须有同名键。** 不删旧的，`Add` 会被静默忽略（日志里是 `- ignored, exists`）。
 
+> **本机实测案例（2026-11-01）**：`Delete` 数组原本只有 `csr-active-config` 等三项，没有 `boot-args`。把 `Add` 里的 `nvfbheads` 从 4 改成 1 后重启，`nvram boot-args` 仍是旧串——改动完全没生效。把 `boot-args` 加进 `Delete` 后才正常。这是最容易漏的一项，改完务必用 `nvram boot-args` 核对，而不是只看 config。
+
 ### boot-args
 
 ```
