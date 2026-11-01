@@ -14,25 +14,13 @@
 | 部件 | 型号 / 规格 | 关键 ID |
 |---|---|---|
 | CPU | Intel Core i5-14600KF（6 P-core + 8 E-core / 20 线程） | — |
-| 主板 | Intel 700 系芯片组（具体型号未留档） | PCH xHCI `8086:7a60` |
+| 主板 | 技嘉B760M GAMING XAX | PCH xHCI `8086:7a60` |
 | 内存 | DDR4-3600 16 GB × 2 = 32 GB | — |
 | 显卡 | NVIDIA GeForce RTX 3060 12 GB（GA106） | `10DE:2504` |
-| 核显 | 无（KF 型号） | — |
 | 系统盘 | 单条 1 TB NVMe，GPT 多分区 | APFS 容器 363 GB |
 | 有线网卡 | Realtek RTL8125B 2.5GbE | `10EC:8125` |
 | 无线 / 蓝牙 | Realtek RTL8852BE（蓝牙走 USB） | `10EC:C852` / `0BDA:0852` |
 | 声卡 | Realtek ALC897 + NVIDIA HDMI Audio | `10EC:0897` |
-| 显示器 | AUS VZ27A，27" 2560×1440，HDMI 接入 | 面板 EDID `6b3:27a9` |
-
-磁盘布局（同一块 NVMe）：
-
-```
-disk0s1   EFI (NO NAME, 105 MB)          ← OpenCore 在这里
-disk0s3   Windows 11 (NTFS, 265 GB)
-disk0s4   data (NTFS, 367 GB)
-disk0s5/6 OMARCHY_EFI (2.1 GB × 2)       ← Linux 的 EFI
-disk0s7   APFS Container → macOS (363 GB)
-```
 
 ---
 
@@ -46,7 +34,7 @@ disk0s7   APFS Container → macOS (363 GB)
 | HDMI 音频 | ✅ | `NMHDA.kext` 1.0.0 | 当前默认输出就是 HDMI |
 | 有线网络 | ✅ | RTL812xLucy 1.1.100 | `en0`，2500Base-T |
 | Wi-Fi | ⚠️ 可用，默认关闭 | AirportRTW 2.2.1 | 与蓝牙共用天线，见 [网络与蓝牙](docs/06-network-bluetooth.md) |
-| 蓝牙 | ✅（偶发假死） | RealtekBluetoothFirmware + BlueToolFixup | A2DP 耳机可用 |
+| 蓝牙 | ✅（蓝牙+WIFI只能开其中一个） | RealtekBluetoothFirmware + BlueToolFixup | A2DP 耳机可用 |
 | USB | ✅ | USBToolBox + UTBDefault + XHCIProbe | 默认端口映射，未做定制 |
 | CPU 拓扑 | ✅ 20 线程 | CpuTopologyRebuild 2.0.2 + `ctrsmt=full` | `hw.physicalcpu=6` 是预期值 |
 | 图形启动菜单 | ✅ | OpenCanopy + 主题资源 | 鼠标可用，10 秒超时 |
@@ -126,11 +114,11 @@ gfxrst=4 nvfbhidpi=1 -btlfxboardid -btlfxallowanyaddr -alcdbg
 
 ## 已知限制（诚实清单）
 
-- **Wi-Fi 与蓝牙抢天线**：RTL8852BE 的 Wi-Fi 驱动不做 BT 共存协调，2.4 GHz 下蓝牙 A2DP 会被饿死。本机默认开机关 Wi-Fi，走有线。
+- **Wi-Fi 与蓝牙抢天线**：RTL8852BE 的 Wi-Fi 驱动不做 BT 共存协调，2.4 GHz 下蓝牙 A2DP 会被饿死。本机默认开机关 Wi-Fi，走有线网络才能正常使用蓝牙。
 - **无 AirDrop / Handoff / 通用剪贴板**：非 Apple 网卡，无解。
 - **NVIDIA 驱动是第三方、非开源、非商用许可**（PolyForm Noncommercial），且厂商对 Ampere 只标 `Pending`——本机实测可用，但换卡必须自己验证。
 - **睡眠未验证**：本机直接 `sleep 0` 关掉了。想让机器睡眠的人要自己测，并准备回滚。
-- **蓝牙偶发假死**：热重启复位不了，需要完全关机断电。处理顺序见网络文档。
+- **蓝牙漏扫**：比如无法识别小米蓝牙遥控器pro
 - **Chrome 的 WebGL / DRM 视频**：不同版本驱动表现不一致，Safari 更稳。本机未系统测试。
 
 ---
